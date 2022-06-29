@@ -1,0 +1,27 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+yelp= pd.read_csv("pizza.csv")
+yelp
+yelp.columns
+yelp.dtypes
+yelp = yelp.replace({'\$':''}, regex = True)
+yelp.sort_values(by='stars', ascending=False)
+yelp.loc[yelp['stars'] == 5]
+#list all of the restauarnt with 5 stars
+yelp.loc[yelp['stars'] == 1] #list all of the restaurants with 1 star
+yelp.sort_values(by='review_count', ascending=False) #sort data with top reviewed restaurants to distinguish top ranked restaurants with pizza as option
+yelp.loc[yelp['review_count'] > 1000] #list all of the restauarnt with over 1000 review count
+yelp.loc[yelp['state'] == "NV"] #list amount of pizza restuants per state NV is interchangable to any valid states such as "ON"
+X= yelp[['review_count']]
+y= yelp[['stars']]
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X,y,test_size =0.2, random_state=10)
+len(X_train)
+len(X_test)
+len(y_train)
+from sklearn.linear_model import LinearRegression
+clf = LinearRegression()
+clf.fit(X_train,y_train)
+clf.predict(X_test)
+y_test
+clf.score(X_test, y_test)
